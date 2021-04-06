@@ -66,6 +66,11 @@
                       <%= t("room.copy_moderator_access") %>
                     </button>
                   <% end %>
+
+                  <a href="https://nc16.digitalrevisor.eu/index.php/gluu/gluuAuth?link=<%= request.base_url + @room.invite_path %>" target="_blank" id="smsEmailInvite" class="btn btn-primary btn-block mt-2" >
+                    <%= t("invite_more") %>
+                  </a>
+
                   <% if Rails.configuration.enable_google_calendar_button %>
                     <a href="<%= google_calendar_path %>" target="__blank" id="schedule" class="btn btn-primary btn-block mt-2">
                       <i class="fas fa-calendar-plus"></i>
