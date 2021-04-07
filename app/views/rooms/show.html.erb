@@ -52,6 +52,11 @@
                   </button>
                 </div>
                 <div class="btn-group-vertical col-sm-6 pl-0 mt-2">
+                  <div class="col-sm-6 mt-2">
+                    <a href="https://invite.digitalrevisor.eu/index.php/gluu/gluuAuth?link=<%= request.base_url + @room.invite_path %>" target="_blank" id="smsEmailInvite" class="btn btn-primary btn-block">
+                      <%= t("invite_more") %>
+                    </a>
+                  </div>
                   <% if @room.access_code.present? %>
                     <input id="copy-code" value="<%= @room.access_code %>" type="hidden">
                     <button id="copy-access" class="btn btn-secondary btn-block" onclick="copyAccess()">
@@ -66,11 +71,6 @@
                       <%= t("room.copy_moderator_access") %>
                     </button>
                   <% end %>
-
-                  <a href="https://nc16.digitalrevisor.eu/index.php/gluu/gluuAuth?link=<%= request.base_url + @room.invite_path %>" target="_blank" id="smsEmailInvite" class="btn btn-primary btn-block mt-2" >
-                    <%= t("invite_more") %>
-                  </a>
-
                   <% if Rails.configuration.enable_google_calendar_button %>
                     <a href="<%= google_calendar_path %>" target="__blank" id="schedule" class="btn btn-primary btn-block mt-2">
                       <i class="fas fa-calendar-plus"></i>
