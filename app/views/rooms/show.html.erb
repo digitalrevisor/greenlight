@@ -52,11 +52,9 @@
                   </button>
                 </div>
                 <div class="btn-group-vertical col-sm-6 pl-0 mt-2">
-                  <div class="col-sm-6 mt-2">
-                    <a href="https://invite.digitalrevisor.eu/index.php/gluu/gluuAuth?link=<%= request.base_url + @room.invite_path %>" target="_blank" id="smsEmailInvite" class="btn btn-primary btn-block">
-                      <%= t("invite_more") %>
-                    </a>
-                  </div>
+
+                    <a href="https://invite.digitalrevisor.eu/index.php/gluu/gluuAuth?link=<%= request.base_url + @room.invite_path %>" target="_blank" id="smsEmailInvite" class="btn btn-primary btn-block"><%= t("room.invite_participants") %></a>
+
                   <% if @room.access_code.present? %>
                     <input id="copy-code" value="<%= @room.access_code %>" type="hidden">
                     <button id="copy-access" class="btn btn-secondary btn-block" onclick="copyAccess()">
