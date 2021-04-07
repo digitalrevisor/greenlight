@@ -2,6 +2,12 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  
+  config.gluu_client_id = '<CLIENT_ID>'
+  config.gluu_secret = '<SECRET>'
+  config.gluu_host = 'https://gluu.digitalrevisor.eu'
+  config.providers = ['DigitalRevisor']
+  config.gluu_app_context = '/b'
 
   # Code is not reloaded between requests.
   config.cache_classes = true
