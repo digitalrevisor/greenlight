@@ -219,7 +219,7 @@ nb:
   info_update_success: Informasjonen ble oppdatert.
   invalid_credentials: E-postadressen og passordet du oppga stemte ikke overens med data vi har. Prøv igjen eller klikk Glemt Passord for å tilbakestille passordet.
   invalid_login_method: Pålogging mislyktes på grunn av misforhold på kontoer. Du må logge inn med omniauth.
-  invite_message: "For å invitere noen til møtet, send dem denne lenken:"
+  invite_message: "Du som møteleder kan installere en plugin i nettleseren for å kunne skanne QR koden som møtedeltakeren viser på sin delte skjerm. Alternativt ber du om å få fjernkontroll lenken tilsendt på chatten her. <br><br> For å invitere noen til møtet, send dem denne lenken:"
   javascript:
     room:
       mailer:
