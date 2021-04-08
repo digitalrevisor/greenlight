@@ -127,10 +127,6 @@ class SessionsController < ApplicationController
 
 
   #-----------------------------------------------------------
-
-
-
-
   # GET /signin
   def signin
     check_if_twitter_account

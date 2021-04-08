@@ -2,12 +2,6 @@
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  
-  config.gluu_client_id = '<CLIENT_ID>'
-  config.gluu_secret = '<SECRET>'
-  config.gluu_host = 'https://gluu.digitalrevisor.eu'
-  config.providers = ['DigitalRevisor']
-  config.gluu_app_context = '/b'
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -67,13 +61,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options)
-  config.active_storage.service = if ENV["AWS_ACCESS_KEY_ID"].present?
-                                    :amazon
-                                  elsif ENV["GCS_PRIVATE_KEY_ID"].present?
-                                    :google
-                                  else
-                                    :local
-                                  end
+  config.active_storage.service = :local
 
   # Mount Action Cable outside main process or domain
   # config.action_cable.mount_path = nil
@@ -94,31 +82,15 @@ Rails.application.configure do
   # Tell Action Mailer to use smtp server, if configured
   config.action_mailer.delivery_method = ENV['SMTP_SERVER'].present? ? :smtp : :sendmail
 
-  ActionMailer::Base.smtp_settings = if ENV['SMTP_AUTH'].present? && ENV['SMTP_AUTH'] != "none"
-    {
-      address: ENV['SMTP_SERVER'],
-      port: ENV["SMTP_PORT"],
-      domain: ENV['SMTP_DOMAIN'],
-      user_name: ENV['SMTP_USERNAME'],
-      password: ENV['SMTP_PASSWORD'],
-      authentication: ENV['SMTP_AUTH'],
-      enable_starttls_auto: ENV['SMTP_STARTTLS_AUTO'],
-    }
-  else
-    {
-      address: ENV['SMTP_SERVER'],
-      port: ENV["SMTP_PORT"],
-      domain: ENV['SMTP_DOMAIN'],
-      enable_starttls_auto: ENV['SMTP_STARTTLS_AUTO'],
-    }
-  end
-
-  # enable SMTPS: SMTP over direct TLS connection
-  ActionMailer::Base.smtp_settings[:tls] = true if ENV['SMTP_TLS'].present? && ENV['SMTP_TLS'] != "false"
-
-  # If configured to 'none' don't check the smtp servers certificate
-  ActionMailer::Base.smtp_settings[:openssl_verify_mode] =
-    ENV['SMTP_OPENSSL_VERIFY_MODE'] if ENV['SMTP_OPENSSL_VERIFY_MODE'].present?
+  ActionMailer::Base.smtp_settings = {
+    address: ENV['SMTP_SERVER'],
+    port: ENV["SMTP_PORT"],
+    domain: ENV['SMTP_DOMAIN'],
+    user_name: ENV['SMTP_USERNAME'],
+    password: ENV['SMTP_PASSWORD'],
+    authentication: ENV['SMTP_AUTH'],
+    enable_starttls_auto: ENV['SMTP_STARTTLS_AUTO'],
+  }
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true
@@ -138,26 +110,24 @@ Rails.application.configure do
   # Use Lograge for logging
   config.lograge.enabled = true
 
-  config.lograge.ignore_actions = ["HealthCheckController#all", "ThemesController#index",
-                                   "ApplicationCable::Connection#connect", "WaitingChannel#subscribe",
-                                   "ApplicationCable::Connection#disconnect", "WaitingChannel#unsubscribe"]
+  config.lograge.ignore_actions = ["HealthCheck::HealthCheckController#index"]
 
   config.lograge.custom_options = lambda do |event|
     # capture some specific timing values you are interested in
     { host: event.payload[:host] }
   end
 
-  config.log_formatter = proc do |severity, time, _progname, msg|
-    "#{time} - #{severity}: #{msg} \n"
+  config.log_formatter = proc do |severity, _time, _progname, msg|
+    "#{severity}: #{msg} \n"
   end
 
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [:request_id, :remote_ip]
+  config.log_tags = [:request_id]
 
   if ENV["RAILS_LOG_TO_STDOUT"] == "true"
-    logger = ActiveSupport::Logger.new($stdout)
+    logger = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   elsif ENV["RAILS_LOG_REMOTE_NAME"] && ENV["RAILS_LOG_REMOTE_PORT"]
@@ -175,5 +145,19 @@ Rails.application.configure do
   # Set the relative url root for deployment to a subdirectory.
   config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || "/b" if ENV['RELATIVE_URL_ROOT'] != "/"
 
-  config.hosts = ENV['SAFE_HOSTS'].presence || nil
+  #config.gluu_client_id = '@!652A.B5CA.9421.395D!0001!8762.E756!0008!A823.433F.6197.8632'
+  #config.gluu_secret = 'TkpN9brcLK6MlGMtbduW7D9T'
+  #config.gluu_host = 'https://gluu.digitalrevisor.eu'
+  #config.providers = ['DigitalRevisor']
+  #config.gluu_app_context = '/b'
+
+  config.gluu_client_id = '@!652A.B5CA.9421.395D!0001!8762.E756!0008!A823.433F.6197.8632'
+  config.gluu_secret = 'TkpN9brcLK6MlGMtbduW7D9T'
+  config.gluu_host = 'https://gluu.digitalrevisor.eu'
+  config.gluu_user_role = 'chat.digitalrevisor.eu'
+  config.gluu_admin_role = 'chat.digitalrevisor.eu/admin'
+  config.gluu_invalid_subscription_url = 'https://gluu.digitalrevisor.eu/portal/subscriptionError?domain=chat.digitalrevisor.eu'
+  config.providers = ['DigitalRevisor']
+  config.gluu_app_context = '/b'
 end
+
